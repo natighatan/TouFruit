@@ -1,2 +1,2 @@
-# ToufFruit
-A repository for our very own ToufFruit experimental discord bot
+# TouFruit
+A repository for our very own TouFruit experimental discord bot
