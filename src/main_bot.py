@@ -18,7 +18,7 @@ load_dotenv()
 DESCRIPTION = '''This message will be presented when evoking the help command.
 This will be on the second line.'''
 TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+GUILD_ID = int(os.getenv('DISCORD_GUILD'))
 
 # this specifies what extensions to load when the bot starts up
 """
@@ -38,10 +38,10 @@ async def on_ready():
     Defines action of the bot when it starts up
     :return:
     """
-    guild = discord.utils.get(bot.guilds, name=GUILD)
+    guild = discord.utils.get(bot.guilds, id=GUILD_ID)
     members = '\n - '.join([member.name for member in guild.members])
     print(f'{bot.user.name} has connected to Discord!')
-    print(f'It has identified the following members under the server {GUILD}:\n - {members}')
+    print(f'It has identified the following members under the server {GUILD_ID}:\n - {members}')
 
 
 @bot.command()

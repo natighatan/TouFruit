@@ -4,6 +4,8 @@ Expand this freely but always test to verify your function
 isn't exposed to harm by malicious input!
 """
 from discord.ext import commands
+import random
+import helper_methods
 
 
 class Fun(commands.Cog):
@@ -14,6 +16,16 @@ class Fun(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.interactions = ["pout", "highfive", "hug", "kiss", "pat", "shoot", "bite", "slap", "lick", "feed", "stare",
+                             "sip", "spank", "drink", "stab", "poke", "punch", "shrug", "facepalm", "cry", "wave",
+                             "sleep", "laugh", "blush", "dance", "explode", "sniff", "tackle", "hide"]
+        self.vowels = ("a", "e", "i", "o", "u")
+
+    @commands.command(name="whattodo", help="Randomly decides what to do to someone")
+    async def whattodo(self, ctx, user):
+        action = random.choice(self.interactions)
+        action_prefix = "an" if action.startswith(self.vowels) else "a"
+        await ctx.send(f"Oh! I think {user} deserves a {action}")
 
     @commands.command(name="add", help="Returns the sum for two numbers")
     async def add(self, ctx, left: int, right: int) -> int:
