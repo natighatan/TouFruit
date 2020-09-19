@@ -8,6 +8,7 @@ Changes on this file should be conservative.
 import os
 
 import discord
+import helper_methods
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -38,8 +39,8 @@ async def on_ready():
     Defines action of the bot when it starts up
     :return:
     """
-    guild = discord.utils.get(bot.guilds, id=GUILD_ID)
-    members = '\n - '.join([member.name for member in guild.members])
+    guild_members = helper_methods.get_members_for_guild(bot=bot, guild_id=GUILD_ID)
+    members = '\n - '.join([member.name for member in guild_members])
     print(f'{bot.user.name} has connected to Discord!')
     print(f'It has identified the following members under the server {GUILD_ID}:\n - {members}')
 

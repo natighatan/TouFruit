@@ -23,9 +23,18 @@ class Fun(commands.Cog):
 
     @commands.command(name="whattodo", help="Randomly decides what to do to someone")
     async def whattodo(self, ctx, user):
+        # Find the mentioned member
+        member = helper_methods.find_member_by_name_similarity(bot=self.bot,
+                                                               requested_name=user,
+                                                               guild_id=ctx.guild.id)
+        if not member:
+            await ctx.send(f"I could not find anyone with a name even remotely similar to {user}. Sorry!")
+            return
+
+        member_name = helper_methods.get_member_name(member=member)
         action = random.choice(self.interactions)
-        action_prefix = "an" if action.startswith(self.vowels) else "a"
-        await ctx.send(f"Oh! I think {user} deserves a {action}")
+        action = f"{'an' if action.startswith(self.vowels) else 'a'} {action}"
+        await ctx.send(f"Oh! I think {member_name} deserves {action}")
 
     @commands.command(name="add", help="Returns the sum for two numbers")
     async def add(self, ctx, left: int, right: int) -> int:
