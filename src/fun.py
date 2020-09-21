@@ -21,6 +21,16 @@ class Fun(commands.Cog):
                              "sleep", "laugh", "blush", "dance", "explode", "sniff", "tackle", "hide"]
         self.vowels = ("a", "e", "i", "o", "u")
 
+    @commands.command(name="geocom", help="Computes Geo center of mass for a list of cities")
+    async def geocom(self, ctx, *args):
+        if not args:
+            await ctx.send('Please provide names of cities using quotes. For example: $geocom "Tel Aviv" "New York"')
+            return
+
+        locations = list(args)
+        link = helper_methods.compute_geo_center_of_mass(list_of_cities=locations)
+        await ctx.send(f"See your CoM here: {link}")
+
     @commands.command(name="whattodo", help="Randomly decides what to do to someone")
     async def whattodo(self, ctx, user):
         # Find the mentioned member
