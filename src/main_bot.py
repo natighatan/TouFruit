@@ -4,8 +4,11 @@ initialization, connection and authentication, and loading
 Cogs-based extensions.
 
 Changes on this file should be conservative.
+
+Bot invite link: https://discord.com/oauth2/authorize?client_id=756225088239566879&scope=bot
 """
 import os
+import json
 
 import discord
 from discord.ext import commands
@@ -20,6 +23,7 @@ DESCRIPTION = '''This message will be presented when evoking the help command.
 This will be on the second line.'''
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD_ID = int(os.getenv('DISCORD_GUILD'))
+helper_methods.PERMITTED_GUILDS = json.loads(os.getenv('PERMITTED_GUILDS'))
 
 # this specifies what extensions to load when the bot starts up
 """

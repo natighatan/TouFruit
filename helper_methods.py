@@ -119,3 +119,12 @@ def get_members_for_guild(bot, guild_id: str) -> list:
     guild = discord.utils.get(bot.guilds, id=guild_id)
     return sorted([member for member in guild.members if not member.bot],
                   key=lambda x: x.name, reverse=False)
+
+
+"""
+Security
+"""
+
+
+def context_has_valid_permissions(ctx):
+    return ctx.guild.id in PERMITTED_GUILDS

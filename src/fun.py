@@ -24,23 +24,48 @@ class Fun(commands.Cog):
                              "tackle", "hide"]
         self.vowels = ("a", "e", "i", "o", "u")
 
-    @commands.command(name="geocom", help="Computes Geo center of mass for a list of cities")
-    async def geocom(self, ctx, *args):
+    # @commands.command(name="geocom", help="Computes Geo center of mass for a list of cities")
+    # async def geocom(self, ctx, *args):
+    #     """
+    #     Function that computes the geographical center of mass
+    #     for a given list of cities
+    #     :param ctx: Context
+    #     :param args: List of cities separated by spaces and surrounded by quotes
+    #     :return: Link to a map showing the center of mass
+    #     """
+    #     if not args:
+    #         await ctx.send('Please provide names of cities using quotes.'
+    #                        ' For example: $geocom "Tel Aviv" "New York"')
+    #         return
+    #
+    #     locations = list(args)
+    #     link = helper_methods.compute_geo_center_of_mass(list_of_cities=locations)
+    #     await ctx.send(f"See your CoM here: {link}")
+
+    @commands.command(name="f", help="Pay respects to someone")
+    async def f(self, ctx, user):
         """
-        Function that computes the geographical center of mass
-        for a given list of cities
+        A function to pay respects to a user
         :param ctx: Context
-        :param args: List of cities separated by spaces and surrounded by quotes
-        :return: Link to a map showing the center of mass
+        :param user: Name or mention of the user to pay respects to
+        :return: Message with mention to pay respects
         """
-        if not args:
-            await ctx.send('Please provide names of cities using quotes.'
-                           ' For example: $geocom "Tel Aviv" "New York"')
+        # Verify permissions
+        if not helper_methods.context_has_valid_permissions(ctx):
+            await ctx.send("Sorry, but you lack permissions to perform this action!")
             return
 
-        locations = list(args)
-        link = helper_methods.compute_geo_center_of_mass(list_of_cities=locations)
-        await ctx.send(f"See your CoM here: {link}")
+        # Find the mentioned member
+        member = helper_methods.find_member_by_name_similarity(bot=self.bot,
+                                                               requested_name=user,
+                                                               guild_id=ctx.guild.id)
+
+        if not member:
+            await ctx.send("Are you trying to pay you respects to a ghost?")
+            return
+
+        author_name = ctx.message.author.name if not ctx.message.author.nick else ctx.message.author.nick
+        await ctx.send(f"{author_name} has payed respects to {member.mention}! ❤️")
 
     @commands.command(name="whattodo", help="Randomly decides what to do to someone")
     async def whattodo(self, ctx, user):
@@ -51,6 +76,11 @@ class Fun(commands.Cog):
         :param user: Requested user (either a name string or a mention)
         :return: Message proposing a Sigma action on that user
         """
+        # Verify permissions
+        if not helper_methods.context_has_valid_permissions(ctx):
+            await ctx.send("Sorry, but you lack permissions to perform this action!")
+            return
+
         # Find the mentioned member
         member = helper_methods.find_member_by_name_similarity(bot=self.bot,
                                                                requested_name=user,
@@ -65,16 +95,21 @@ class Fun(commands.Cog):
         action = f"{'an' if action.startswith(self.vowels) else 'a'} {action}"
         await ctx.send(f"Oh! I think {member_name} deserves {action}")
 
-    @commands.command(name="add", help="Returns the sum for two numbers")
-    async def add(self, ctx, left: int, right: int) -> int:
-        """
-        Adds two numbers together and returns their sum
-        :param ctx: Context variable
-        :param left: Left integer to add
-        :param right: Right integer to add
-        :return: integer result of sum between left and right
-        """
-        await ctx.send(left + right)
+    # @commands.command(name="add", help="Returns the sum for two numbers")
+    # async def add(self, ctx, left: int, right: int) -> int:
+    #     """
+    #     Adds two numbers together and returns their sum
+    #     :param ctx: Context variable
+    #     :param left: Left integer to add
+    #     :param right: Right integer to add
+    #     :return: integer result of sum between left and right
+    #     """
+    # Verify permissions
+    # if not helper_methods.context_has_valid_permissions(ctx):
+    #     await ctx.send("Sorry, but you lack permissions to perform this action!")
+    #     return
+
+    #     await ctx.send(left + right)
 
 
 def setup(bot):
