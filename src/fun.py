@@ -3,8 +3,8 @@ This file defines commands for fun that the bot can carry out
 Expand this freely but always test to verify your function
 isn't exposed to harm by malicious input!
 """
-from discord.ext import commands
 import random
+from discord.ext import commands
 import helper_methods
 
 
@@ -16,15 +16,26 @@ class Fun(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.interactions = ["pout", "highfive", "hug", "kiss", "pat", "shoot", "bite", "slap", "lick", "feed", "stare",
-                             "sip", "spank", "drink", "stab", "poke", "punch", "shrug", "facepalm", "cry", "wave",
-                             "sleep", "laugh", "blush", "dance", "explode", "sniff", "tackle", "hide"]
+        self.interactions = ["pout", "highfive", "hug", "kiss", "pat",
+                             "shoot", "bite", "slap", "lick", "feed", "stare",
+                             "sip", "spank", "drink", "stab", "poke", "punch",
+                             "shrug", "facepalm", "cry", "wave", "sleep",
+                             "laugh", "blush", "dance", "explode", "sniff",
+                             "tackle", "hide"]
         self.vowels = ("a", "e", "i", "o", "u")
 
     @commands.command(name="geocom", help="Computes Geo center of mass for a list of cities")
     async def geocom(self, ctx, *args):
+        """
+        Function that computes the geographical center of mass
+        for a given list of cities
+        :param ctx: Context
+        :param args: List of cities separated by spaces and surrounded by quotes
+        :return: Link to a map showing the center of mass
+        """
         if not args:
-            await ctx.send('Please provide names of cities using quotes. For example: $geocom "Tel Aviv" "New York"')
+            await ctx.send('Please provide names of cities using quotes.'
+                           ' For example: $geocom "Tel Aviv" "New York"')
             return
 
         locations = list(args)
@@ -33,12 +44,20 @@ class Fun(commands.Cog):
 
     @commands.command(name="whattodo", help="Randomly decides what to do to someone")
     async def whattodo(self, ctx, user):
+        """
+        A function that suggests what to do with a requested user
+        based on the available function of the Sigma bot
+        :param ctx: Context
+        :param user: Requested user (either a name string or a mention)
+        :return: Message proposing a Sigma action on that user
+        """
         # Find the mentioned member
         member = helper_methods.find_member_by_name_similarity(bot=self.bot,
                                                                requested_name=user,
                                                                guild_id=ctx.guild.id)
         if not member:
-            await ctx.send(f"I could not find anyone with a name even remotely similar to {user}. Sorry!")
+            await ctx.send(f"I could not find anyone with a name"
+                           f" even remotely similar to {user}. Sorry!")
             return
 
         member_name = helper_methods.get_member_name(member=member)

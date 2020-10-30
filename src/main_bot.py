@@ -8,9 +8,9 @@ Changes on this file should be conservative.
 import os
 
 import discord
-import helper_methods
 from discord.ext import commands
 from dotenv import load_dotenv
+import helper_methods
 
 # Load environment variables
 load_dotenv()
@@ -30,7 +30,8 @@ Include only submodule names, without file extensions
 """
 STARTUP_EXTENSIONS = ['fun']
 
-bot = commands.Bot(command_prefix='$', description=DESCRIPTION)
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix='$', description=DESCRIPTION, intents=intents)
 
 
 @bot.event
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         try:
             bot.load_extension(extension)
         except ModuleNotFoundError as exception:
-            exception_message = '{}: {}'.format(type(exception).__name__, exception)
-            print('Failed to load extension {}\n{}'.format(extension, exception_message))
+            EXCEPTION_MESSAGE = '{}: {}'.format(type(exception).__name__, exception)
+            print('Failed to load extension {}\n{}'.format(extension, EXCEPTION_MESSAGE))
 
     bot.run(TOKEN)

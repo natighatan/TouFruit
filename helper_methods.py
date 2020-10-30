@@ -72,6 +72,13 @@ def find_member_by_name_similarity(bot, requested_name, guild_id, threshold=0.5)
     :return: Discord Member object
     """
     members = get_members_for_guild(bot=bot, guild_id=guild_id)
+
+    if requested_name.startswith('<@!') and requested_name.endswith('>'):
+        # This is a mention
+        user_id = int(requested_name[3:-1])
+        best_match = [member for member in members if member.id == user_id][0]
+        return best_match
+
     best_match = None
     best_similarity = -1.00
     for member in members:
