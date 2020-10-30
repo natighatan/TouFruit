@@ -35,7 +35,8 @@ Include only submodule names, without file extensions
 STARTUP_EXTENSIONS = ['fun']
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='$', description=DESCRIPTION, intents=intents)
+bot = commands.Bot(command_prefix='%', description=DESCRIPTION, intents=intents)
+# bot.remove_command('help')
 
 
 @bot.event
@@ -50,32 +51,15 @@ async def on_ready():
     print(f'It has identified the following members under the server {GUILD_ID}:\n - {members}')
 
 
-@bot.command()
-async def load(ctx, extension_name: str):
-    """
-    Loads an extension
-    :param ctx: Context variable
-    :param extension_name: String defining name of extension to be loaded
-    :return:
-    """
-    try:
-        bot.load_extension(extension_name)
-    except (AttributeError, ImportError) as exception:
-        await ctx.send("```py\n{}: {}\n```".format(type(exception).__name__, str(exception)))
-        return
-    await ctx.send("{} loaded.".format(extension_name))
-
-
-@bot.command()
-async def unload(ctx, extension_name: str):
-    """
-    Unloads an extension
-    :param ctx: Context variable
-    :param extension_name: String defining name of extension to be unloaded
-    :return:
-    """
-    bot.unload_extension(extension_name)
-    await ctx.send("{} unloaded.".format(extension_name))
+# @bot.command(name="help", description="Returns all commands available")
+# async def help(ctx):
+#     helptext = "```"
+#     for command in bot.commands:
+#         if command.name in HIDDEN_FUNCTIONS:
+#             continue
+#         helptext += f"{command.name}: {command.help}\n"
+#     helptext += "```"
+#     await ctx.send(helptext)
 
 
 if __name__ == "__main__":
