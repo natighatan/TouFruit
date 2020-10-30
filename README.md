@@ -11,3 +11,6 @@ A repository for our very own TouFruit experimental discord bot! :heart:
 - To start learning about how to make a Discord Bot in Python visit [this page on Real Python](https://realpython.com/how-to-make-a-discord-bot-python/#how-to-make-a-discord-bot-in-python)
 - To get an example of how Cog-based extensions work, see [this GitHub Gist](https://gist.github.com/leovoel/46cd89ed6a8f41fd09c5)
 - And most importantly - HAVE FUN!
+
+### Adjusting bot settings
+- Please see the [Discord application page](https://discord.com/developers/applications)
