@@ -43,7 +43,7 @@ class Fun(commands.Cog):
     #     await ctx.send(f"See your CoM here: {link}")
 
     @commands.command(name="f", help="Pay respects to someone")
-    async def f(self, ctx, user):
+    async def f(self, ctx, *args):
         """
         A function to pay respects to a user
         :param ctx: Context
@@ -55,7 +55,14 @@ class Fun(commands.Cog):
             await ctx.send("Sorry, but you lack permissions to perform this action!")
             return
 
+        author_name = ctx.message.author.name if not ctx.message.author.nick else ctx.message.author.nick
+
+        if not args:
+            await ctx.send(f"{author_name} has payed respects! ❤️")
+            return
+
         # Find the mentioned member
+        user = args[0]
         member = helper_methods.find_member_by_name_similarity(bot=self.bot,
                                                                requested_name=user,
                                                                guild_id=ctx.guild.id)
@@ -64,7 +71,7 @@ class Fun(commands.Cog):
             await ctx.send("Are you trying to pay you respects to a ghost?")
             return
 
-        author_name = ctx.message.author.name if not ctx.message.author.nick else ctx.message.author.nick
+
         await ctx.send(f"{author_name} has payed respects to {member.mention}! ❤️")
 
     @commands.command(name="whattodo", help="Randomly decides what to do to someone")
