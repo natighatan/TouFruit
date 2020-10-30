@@ -13,7 +13,7 @@ import json
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-import helper_methods
+from src import helper_methods
 
 # Load environment variables
 load_dotenv()

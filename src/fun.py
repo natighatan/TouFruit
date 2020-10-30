@@ -5,7 +5,7 @@ isn't exposed to harm by malicious input!
 """
 import random
 from discord.ext import commands
-import helper_methods
+from src import helper_methods
 
 
 class Fun(commands.Cog):
